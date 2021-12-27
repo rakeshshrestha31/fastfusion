@@ -11,6 +11,8 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 
+#include <QGLViewer/manipulatedFrame.h>
+
 
 #include <stdio.h>
 #include <GL/glx.h>

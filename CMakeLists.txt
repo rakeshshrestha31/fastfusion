@@ -24,33 +24,33 @@ if (CMAKE_COMPILER_IS_GNUCC)
                     OUTPUT_VARIABLE GCC_VERSION)
     string(REGEX MATCHALL "[0-9]+" GCC_VERSION_COMPONENTS ${GCC_VERSION})
     list(GET GCC_VERSION_COMPONENTS 0 GCC_MAJOR)
-    list(GET GCC_VERSION_COMPONENTS 1 GCC_MINOR)
+    # list(GET GCC_VERSION_COMPONENTS 1 GCC_MINOR)
 
     message(STATUS "GCC Major Version is " ${GCC_MAJOR})
-    message(STATUS "GCC Major Version is " ${GCC_MINOR})
+    # message(STATUS "GCC Major Version is " ${GCC_MINOR})
 endif()
 
 set(CMAKE_C_FLAGS
--frounding-math 
+-frounding-math
 #-Wall
 )
 
-execute_process(COMMAND cat /proc/cpuinfo OUTPUT_VARIABLE CPU_INFO)
-string(REGEX MATCHALL "avx2" AVX_STRING ${CPU_INFO})
-list(LENGTH AVX_STRING AVX_STRING_LENGTH)
-# message(STATUS "AVX_STRING: " ${AVX_STRING})
-message(STATUS "Number of avx2 occurrences in /proc/cpuinfo: " ${AVX_STRING_LENGTH})
-
-
-if(${AVX_STRING_LENGTH} GREATER 0)
-message(STATUS "Compiling with AVX2 support")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -mavx2 -funroll-loops -DOWNAVX")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -mavx2 -funroll-loops -DOWNAVX")
-else()
+# execute_process(COMMAND cat /proc/cpuinfo OUTPUT_VARIABLE CPU_INFO)
+# string(REGEX MATCHALL "avx2" AVX_STRING ${CPU_INFO})
+# list(LENGTH AVX_STRING AVX_STRING_LENGTH)
+# # message(STATUS "AVX_STRING: " ${AVX_STRING})
+# message(STATUS "Number of avx2 occurrences in /proc/cpuinfo: " ${AVX_STRING_LENGTH})
+#
+#
+# if(${AVX_STRING_LENGTH} GREATER 0)
+# message(STATUS "Compiling with AVX2 support")
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -mavx2 -funroll-loops -DOWNAVX")
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -mavx2 -funroll-loops -DOWNAVX")
+# else()
 message(STATUS "Compiling without AVX2 support")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -msse4.2 -funroll-loops")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -msse4.2 -funroll-loops")
-endif()
+# endif()
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
